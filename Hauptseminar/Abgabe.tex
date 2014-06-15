@@ -69,8 +69,7 @@ Schon der erste Schritt der Herleitung entpuppt sich als der vielleicht schwieri
 Jedoch kann man mit modernen Computern einfach alle Möglichkeiten der Faktorisierung durchprobieren. Um dieser einfachen Methode entgegenzuwirken, müssen die Zahlen P und Q sehr groß gewählt werden. Damit kann sichergestellt werden, dass es unrealistisch ist, dass ein Brute-Force Anschlag in ab-wartbarer Zeit zum Erfolg führt. Zur gegenwärtiger Zeit ist eine Größenordnung von 1024 oder 2048 Bit für die Primzahlen gängig.\\
 
 \subsubsection{Komplexität der Herleitung}
-
-Test für Git
+Der Vorteil der sich für die Sicherheit aus der Wahl der großen Primzahlen ergibt, ist jedoch ein Nachteil für die Komplexität des Algorithmus, da sie Zahlen sehr schwer zu bestimmen sind. Dabei stellt jedoch jede Forderung an die die Zahlen ein plus an Sicherheit auf kosten der Komplexität dar. Um einer Brute-Force Attacke entgegenzuwirken müssen die Zahlen sehr große sein.  Die Zahlen müssen voneinander verschieden sein, da sonnst ein Angreifer ein Quadrat erkennen könnte und damit die Zeit um die Primfaktorzerlegung durchzuführen signifikant senken kann. Die letzte Anforderung ist dabei die wohl wichtigste und zugleich am schwierigsten zu erzeugende. Die Zahlen müssen prim sein, da sonst das Produkt der beiden mehr Teiler hat als die Zahlen selbst. Das Erzeugen von Primzahlen gestaltet sich jedoch als sehr schwer. in einer Größenordnung \(^2512\) ist eine von 200 Zahlen prim. Dennoch kann ein Zahlengenerator bei ausreichender Zeit eine Primzahl finden. Doch der gefundene Wert muss noch validiert werden.  Der Standartprozess für die Prüfung ist es, die vermeintliche Primzahl P durch alle Zahlen des Intervalls [1;$\sqrt{P}$] zu teilen. 
 
 
 
