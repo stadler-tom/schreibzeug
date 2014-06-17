@@ -71,13 +71,28 @@ Jedoch kann man mit modernen Computern einfach alle Möglichkeiten der Faktorisie
 \subsubsection{Komplexität der Herleitung}
 Der Vorteil der sich für die Sicherheit aus der Wahl der großen Primzahlen ergibt, ist jedoch ein Nachteil für die Komplexität des Algorithmus, da sie Zahlen sehr schwer zu bestimmen sind. Dabei stellt jedoch jede Forderung an die die Zahlen ein plus an Sicherheit auf kosten der Komplexität dar.\\
  Um einer Brute-Force Attacke entgegenzuwirken müssen die Zahlen sehr große sein.  Die Zahlen müssen voneinander verschieden sein, da sonnst ein Angreifer ein Quadrat erkennen könnte und damit die Zeit um die Primfaktorzerlegung durchzuführen signifikant senken kann. Die letzte Anforderung ist dabei die wohl wichtigste und zugleich am schwierigsten zu erzeugende. Die Zahlen müssen prim sein, da sonst das Produkt der beiden mehr Teiler hat als die Zahlen selbst.\\
-  Das Erzeugen von Primzahlen gestaltet sich jedoch als sehr schwer. in einer Größenordnung \(^2512\) ist eine von 200 Zahlen prim. Dennoch kann ein Zahlengenerator bei ausreichender Zeit eine Primzahl finden. Doch der gefundene Wert muss noch validiert werden.  Der Standartprozess für die Prüfung ist es, die vermeintliche Primzahl P durch alle Zahlen des Intervalls [1;$\sqrt{P}$] zu teilen. Trotzdem ist die Berechnung deterministisch und in polynomialer Zeit lösbar.\\
+  Das Erzeugen von Primzahlen gestaltet sich jedoch als sehr schwer. in einer Größenordnung \(2^512\) ist eine von 200 Zahlen prim. Dennoch kann ein Zahlengenerator bei ausreichender Zeit eine Primzahl finden. Doch der gefundene Wert muss noch validiert werden.  Der Standartprozess für die Prüfung ist es, die vermeintliche Primzahl P durch alle Zahlen des Intervalls [1;$\sqrt{P}$] zu teilen. Trotzdem ist die Berechnung deterministisch und in polynomialer Zeit lösbar.\\
 Ein weiteres grundsätzliches Problem sind die beiden Produkte für N und $\psi$  mit den Multiplikatoren P und Q. Kosten und Zeit deines Systems, dass den RSA verwendet, werden direkt von der Wahl des Multiplikationssystems beeinflusst.\\
 Total sicher ist der RSA Algoryithmus jedoch nicht, denn er kann bei ausreichender Zeit geknackt werden. Werden die Primzahlen jedoch so hoch angesetzt, dass es unrealistisch wird den Algorithmus in polynomialer Zeit zu knacken, so ist diese Zeit zugleich das Herzstück der Sicherheit dieser Verschlüsselung.
 
 
 \subsection{Hardware Implementierung}
-In der Hardware Implementierung zeigt sich die Schwierigkeit der Multiplikation von großen Zahlen. 
+In der Hardware Implementierung zeigt sich die Schwierigkeit der Multiplikation von großen Zahlen. Wie oben erwähnt ist die Grundlage des Algorithmus die Multiplikation von zwei mindestens 512 BIt großen Zahlen. im folgenden wird auf verschiedene Möglichkeiten eingegangen diese Problematik zu behandeln und in ein RSA Verschlüsselungssystem zu integrieren. 
+
+\subsubsection{Kombinatorischer Multiplizierer}
+für die Multiplikation zweier n-bit Zahlen werden \(n^2\) Volladierer benötigt. Diese Volladdieren werden zu einer n x n großen Matrix zusammengeschlossen, die das Ergebnis der Multiplikation nach dem selben Prinzip wie bei der Multiplikation von Hand ermitteln. Jede Reihe des Combinatorischen Multiplizierers berechnet dabei ein  Teilergebnis, die wiederum am Ende zusammenaddiert werden. Diese Methode berechnet das Multiplikationsergebnis in konstanter Zeit. Die Anzahl der Volladdierer die jedes Bit durchlaufen muss ist jedoch sehr hoch und wächst exponentiell mit der Größe der Primzahlen P und Q. So wird die konstante Zeit unausführbar lange. In der Praxis kommt der Combinatorische Multiplizierer wie hier dargestellt auf grund der Zeit und Kosten sehr selten zum Einsatz. 
+
+
+\subsubsection{bit serieller Multiplizierer}
+Diese Methode verwendet ein 
+
+\subsubsection{Hybrid}
+
+\subsection{Sicherheitsanalyse}
+
+\subsection{Fazit}
+
+
 
 
 
