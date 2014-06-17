@@ -54,7 +54,7 @@ Der RSA Algorithmus ist sehr bekannt und weit verbreitet. Doch trotz seines Beka
 
 \subsection{mathematische Herleitung}
 \label{sec:mathenatical}
-Der erste Schritt der Berechnung ist die Wahl von zwei voneinander verschiedenen, großen und zufälligen Primzahlen, im Weiteren werden diese als P und Q bezeichnet. Die beiden Primzahlen werden verwendet um zwei weitere Zahlen für die Rechnung zu ermitteln, \( N = P \cdot Q \) und \( \psi = (P - 1) \cdot (Q - 1) \). Als nächstes wird eine Zahl E ermittelt für die gilt: \( 1 < E < \psi \) und Eist teilerfremd zu $\psi$. Durch E und $\psi$ wird eine weitere Zahl berechnet, für die gilt: \(D\cdot E = 1 mod \psi\). 
+Der erste Schritt der Berechnung ist die Wahl von zwei voneinander verschiedenen, großen und zufälligen Primzahlen, im Weiteren werden diese als P und Q bezeichnet. Die beiden Primzahlen werden verwendet um zwei weitere Zahlen für die Rechnung zu ermitteln, \( N = P \cdot Q \) und \( \psi = (P - 1) \cdot (Q - 1) \). Als nächstes wird eine Zahl E ermittelt für die gilt: \( 1 < E < \psi \) und E ist teilerfremd zu $\psi$. Durch E und $\psi$ wird eine weitere Zahl berechnet, für die gilt: \(D\cdot E = 1 mod \psi\). 
 Nach der Ermittlung aller benötigten Zahlen, N E und D, können die Schlüssel erzeugt werden. Dabei werden die Zahlen N und E für den öffentlichen Schlüssel verwendet, N und D für den privaten.\\
 Um nun einen Klartext in einen Chiffretext zu überführen muss die Nachricht in eine natürliche Zahl I umgewandelt werden. Unter Verwendung von E und N kann die Umrechnung wie folgt ausgeführt werden:\\
 \(C = I^E mod N\)\\
@@ -80,7 +80,7 @@ Total sicher ist der RSA Algoryithmus jedoch nicht, denn er kann bei ausreichend
 In der Hardware Implementierung zeigt sich die Schwierigkeit der Multiplikation von großen Zahlen. Wie oben erwähnt ist die Grundlage des Algorithmus die Multiplikation von zwei mindestens 512 BIt großen Zahlen. im folgenden wird auf verschiedene Möglichkeiten eingegangen diese Problematik zu behandeln und in ein RSA Verschlüsselungssystem zu integrieren. 
 
 \subsubsection{Kombinatorischer Multiplizierer}
-für die Multiplikation zweier n-bit Zahlen werden \(n^2\) Volladierer benötigt. Diese Volladdieren werden zu einer n x n großen Matrix zusammengeschlossen, die das Ergebnis der Multiplikation nach dem selben Prinzip wie bei der Multiplikation von Hand ermitteln. Jede Reihe des Combinatorischen Multiplizierers berechnet dabei ein  Teilergebnis, die wiederum am Ende zusammenaddiert werden. Diese Methode berechnet das Multiplikationsergebnis in konstanter Zeit. Die Anzahl der Volladdierer die jedes Bit durchlaufen muss ist jedoch sehr hoch und wächst exponentiell mit der Größe der Primzahlen P und Q. So wird die konstante Zeit unausführbar lange. In der Praxis kommt der Combinatorische Multiplizierer wie hier dargestellt auf grund der Zeit und Kosten sehr selten zum Einsatz. 
+für die Multiplikation zweier n-bit Zahlen werden \(n^2\) Volladdierer benötigt. Diese Volladdierer werden zu einer n x n großen Matrix zusammengeschlossen, die das Ergebnis der Multiplikation nach dem selben Prinzip wie bei der Multiplikation von Hand ermitteln. Jede Reihe des Kombinatorischen Multiplizierers berechnet dabei ein  Teilergebnis, die wiederum am Ende zusammenaddiert werden. Diese Methode berechnet das Multiplikationsergebnis in konstanter Zeit. Die Anzahl der Volladdierer die jedes Bit durchlaufen muss ist jedoch sehr hoch und wächst exponentiell mit der Größe der Primzahlen P und Q. So wird die konstante Zeit unausführbar lange. In der Praxis kommt der Combinatorische Multiplizierer wie hier dargestellt auf grund der Zeit und Kosten sehr selten zum Einsatz. 
 
 
 \subsubsection{bit serieller Multiplizierer}
@@ -89,6 +89,15 @@ Diese Methode verwendet ein
 \subsubsection{Hybrid}
 
 \subsection{Sicherheitsanalyse}
+Nach der Tiefenanalyse der Hardware Implementierung ist es an der Zeit die Anforderungen an ein Kryptosystem zu prüfen. Im letzten Kapitel ist klar geworden, wie umfangreich und komplex die Berechnungen der Multiplikationen zu Stande kommen. Dennoch muss sichergestellt sein das immer das Richtige Ergebnis ermittelt wird. Denn bei einem so komplexen bauteil können sich kleine Fehler einschleichen, die auswiken könne, dass der Algorithmus nicht mehr funktioniert. Also das Chiffretext nicht mehr encodiert werden kann. Weiter müssen die gewünschten längen der Schlüsses so gewählt werden das sie einen ausreichenden Schutz bieten. Ferner muss ein solches System robust sein, was Angriffe angeht, seien es bereits bekannte Methoden oder auch nur theoretische Überlegungen. \\
+Kernstück der Sicherheit stellt das Lösbarkeitsproblem der Primfaktorzerlegung dar. Daher ist jede Anforderung 'groß', 'zufällig', 'voneinander verschieden' und 'prim' ein plus an Sicherheit. \\
+Seit der Publizierung des Algorithmus 1979 wuchs die größe der Zahlen stetig an. Geschuldet ist das den modernen Prozessoren und deren Rechengeschwindigkeit. Daher müssen die Zahlen so groß gewählt werden, dass eine Brute-Force Attacke unwahrscheinlich ist in polynomialer Zeit zu determinieren. Momentan gelten Zahlen im Bereich von 2048 oder 4096 als sicher.\\
+Wenn in der Zufälligkeit eine Unausgewogenheit herrscht kann ein Angreifer das Zahlenfeld eingrenzen und damit die Zeit die er brauchen würde die Primfaktorisierung durchzuführen signifikant verkürzen.\\
+Sollten die beiden Zahlen gleich sein, kann man aus dem Produkt eine Quadratzahl erkennen und die Faktorisierung sofort durchführen. Auch wenn der Abstand der Zahlen zu gering oder viel zu groß ist,  wird die Verschlüsselung anfällig für andere Arten die Faktorisierung zu knacken.\\
+Die letzte Anforderung, dass die Zahlen prim sein müssen ist wie bereits angesprochen die wichtigste und zugleich die am schwierigsten zu kontrollierende. Denn wenn die Zahlen nicht prim wären, so würden mehrere Faktorisierungen existieren und das würde die Komplexität des Algorithmus enorm vermindern. \\
+Ein weiterer Ansatz für Angreifer ist die Zahl E, die im Kapitel der Herleitung als \( 1 < E < \psi \) teilerfremd zu $\psi$ definiert wurde. In der Entschlüsselung \(C = I^E mod N\)\\ ist E ein teil des privaten Schlüssels und damit sehr interessant für Angriffe. 
+
+
 
 \subsection{Fazit}
 
