@@ -84,9 +84,13 @@ Für die Multiplikation zweier n-bit Zahlen werden \(n^2\) Volladdierer benötigt.
 
 
 \subsubsection{bit serieller Multiplizierer}
-Diese Methode verwendet ein 
+Diese Methode verwendet zwei Eingaben und eine Ausgabe und zusätzlich ein Taktsignal. Hierbei werden dem Zyklus immer jeweils ein Bit der Eingaben zugeführt. Typischerweise vom least-significant Bit bis zum most-significant BIt. Während jedem Takt wird ein Teilergebnis zu einer Gesamtsumme addiert und das least-significant Bit der Gesamtsumme wird in die Ausgabe verlagert. \\
+Ein Beispiel Multiplizierer könnte wie folgt aufgebaut sein: Eine Zelle besteht aus einem 5-3 Komprimierungs Modul, welches 5 gleich gewichtete Eingaben auf 3 Ausgaben verdichtet und einigen Flip-Flops. Um mit diesem Aufbau zwei n-Bit Zahlen zu Multiplizierer benötigt man n solcher Zellen. Das System errechnet das Ergebnis in 2n+1 Takten. \\
+Der größte Vorteil gegenüber dem Kombinatorischen Multiplizierer ist die Verringerung der benötigten Fläche. Brauchte die erste Variante noch einen Platz von \(n^{2}\) Volladdierern kann das System auf eine lineare Fläche unter Beachtung der Operandenlänge verkleinert werden.
 
-\subsubsection{Hybrid}
+\subsubsection{Hybrid seriell/parallel}
+Unter Zuhilfenahme eines  fest zugeordnetem traditionellen Sammler kann ein hybrid aus seriellem und parallelem Multiplizierer aufgebaut werden. Dabei wird ein Operand seriell und ein Operand parallel bereitgestellt. Der parallele Operand muss dabei über die gesamte Dauer konstant bleiben. Der serielle Operand wir dagegen Bitweise vom least-significant Bit zum most-significant Bit übergeben. Dabei wird jedes Bit untersucht. Ist es eine Eins, so wird dem mit Null initialisiertem Sammler der parallele Operand hinzu addiert. Bei einer Null wird keine Addition ausgeführt. Nach diesem Schritt wird das untersuchte Bit aus dem Multiplikationszyklus ausgelagert. Dieser Prozess wird für alle 2n+1 Bit des Produkts ausgeführt.\\
+Dieses System hat einen weit weniger Komplexen Aufbau als die beiden zuvor Besprochenen. Der Entwurf kann auf eine lineare Fläche unter Beachtung der Operandenlänge abgebildet werden.
 
 \subsection{Sicherheitsanalyse}
 Nach der Tiefenanalyse der Hardware Implementierung ist es an der Zeit die Anforderungen an ein Kryptosystem zu prüfen. Im letzten Kapitel ist klar geworden, wie umfangreich und komplex die Berechnungen der Multiplikationen zu Stande kommen. Dennoch muss sichergestellt sein das immer das Richtige Ergebnis ermittelt wird. Denn bei einem so komplexen bauteil können sich kleine Fehler einschleichen, die auswiken könne, dass der Algorithmus nicht mehr funktioniert. Also das Chiffretext nicht mehr encodiert werden kann. Weiter müssen die gewünschten längen der Schlüsses so gewählt werden das sie einen ausreichenden Schutz bieten. Ferner muss ein solches System robust sein, was Angriffe angeht, seien es bereits bekannte Methoden oder auch nur theoretische Überlegungen. \\
