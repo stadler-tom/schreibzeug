@@ -1,5 +1,12 @@
 \begin{thebibliography}{1}
 
+\bibitem{TT:12}
+Tuzzio, N., Tehranipoor, M.:
+\newblock {RSA}: Implementation and security.
+\newblock In Tehranipoor, M., Wang, C., eds.: Introduction to Hardware Security
+  and Trust.
+\newblock Springer (2012)  51--64
+
 \bibitem{TW:12}
 Tehranipoor, M., Wang, C.:
 \newblock Introduction to Hardware Security and Trust.
